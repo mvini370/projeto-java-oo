@@ -22,6 +22,8 @@ public class Produto {
 	 * @param descricao
 	 */
 	public Produto(Long codigo, String descricao) {
+		this.codigo = codigo;
+		this.descricao = descricao;
 	}
 
 	/**
@@ -42,9 +44,20 @@ public class Produto {
 		return this.descricao;
 	}
 
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
 	@Override
 	public String toString() {
-		return "Produto [descricao=" + descricao + "]";
+		return "Produto{" +
+				"codigo = " + codigo +
+				", descricao = '" + descricao + '\'' +
+				'}';
 	}
 
 	@Override

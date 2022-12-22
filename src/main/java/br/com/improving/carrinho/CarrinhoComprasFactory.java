@@ -50,7 +50,24 @@ public class CarrinhoComprasFactory {
     public BigDecimal getValorTicketMedio() {
 		List<CarrinhoCompras> carrinhos = new ArrayList<>(this.carrinhoDeCompras.values());
 
+		Produto p1 = new Produto(2L, "Produto 1");
+
+		Produto p2 = new Produto(3L, "Produto 2");
+
+		carrinhos.get(0).adicionarItem(p1, BigDecimal.valueOf(14.4), 1);
+		List<Item> itens = new ArrayList<>();
+		Item i1 = new Item(p2, BigDecimal.valueOf(22.8), 2);
+
+		//carrinhos.get(1).adicionarItem(p2, BigDecimal.valueOf(22.8),1);
+
+
+		//carrinhoDeCompras.put("name",new CarrinhoCompras());
+
+		carrinhoDeCompras.put("Name",new CarrinhoCompras()).adicionarItem(p2, BigDecimal.valueOf(22.8), 2);
+
+		
 		BigDecimal valorTicketMedio = (BigDecimal) valorTicket(carrinhos);
+		System.out.println(carrinhos);
 		return valorTicketMedio.setScale(2, RoundingMode.HALF_EVEN);
     }
 
@@ -68,10 +85,14 @@ public class CarrinhoComprasFactory {
     }
 
 	private Object valorTicket(List<CarrinhoCompras> carrinhos) {
-		carrinhos.stream()
-				.forEach(s -> s.getValorTotal()
-						.plus()
-						.divide(new BigDecimal(carrinhos.size())));
-		return carrinhos;
+
+		return	carrinhos.stream()
+				.map(CarrinhoCompras::getValorTotal)
+				.reduce(BigDecimal.ZERO, BigDecimal::add).divide(new BigDecimal(carrinhos.size()));
+
+		/*carrinhos.stream()
+				.map( s -> s.getValorTotal().plus()
+						.divide(new BigDecimal(carrinhos.size()))).findFirst().orElse(BigDecimal.ZERO);*/
+
 	}
 }
